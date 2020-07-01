@@ -60,20 +60,20 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>2</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>2</state>
+          <state>1</state>
         </option>
         <option>
           <name>RTDescription</name>
-          <state>Use the full configuration of the C/C++ runtime library. Full locale interface, C locale, file descriptor support, multibytes in printf and scanf, and hex floats in strtod.</state>
+          <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
         </option>
         <option>
           <name>OGProductVersion</name>
-          <state>7.30.3.8061</state>
+          <state>7.80.4.12487</state>
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
@@ -123,7 +123,7 @@
         </option>
         <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Full.h</state>
+          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
@@ -132,7 +132,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -181,7 +181,6 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>USE_STDPERIPH_DRIVER</state>
           <state>USE_IAR</state>
         </option>
         <option>
@@ -609,7 +608,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>ADC_BasicExample.srec</state>
+          <state>AES-CRYP-CBC.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -724,7 +723,7 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
@@ -1035,11 +1034,11 @@
         </option>
         <option>
           <name>OGProductVersion</name>
-          <state>7.30.3.8061</state>
+          <state>7.80.4.12487</state>
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.40.3.8937</state>
+          <state></state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1051,7 +1050,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>Default	None</state>
+          <state></state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1090,7 +1089,7 @@
         <option>
           <name>GBECoreSlave</name>
           <version>24</version>
-          <state>1</state>
+          <state>38</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -1107,11 +1106,11 @@
         <option>
           <name>CoreVariant</name>
           <version>24</version>
-          <state>0</state>
+          <state>38</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>Default	None</state>
+          <state>-</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1130,7 +1129,7 @@
         <option>
           <name>GFPUCoreSlave2</name>
           <version>24</version>
-          <state>0</state>
+          <state>38</state>
         </option>
       </data>
     </settings>
