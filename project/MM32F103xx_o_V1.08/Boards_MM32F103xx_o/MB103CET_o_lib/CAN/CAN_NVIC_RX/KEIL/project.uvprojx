@@ -10,12 +10,13 @@
       <TargetName>MM32</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MM32F103CET</Device>
           <Vendor>MindMotion</Vendor>
-          <PackID>MindMotion.MM32F103_DFP.1.4.5</PackID>
+          <PackID>MindMotion.MM32F103xCxE_DFP.1.0.4</PackID>
           <PackURL>http://www.mindmotion.com.cn/Download/MDK_KEIL/</PackURL>
           <Cpu>IROM(0x08000000,0x10000) IRAM(0x20000000,0x5000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -47,14 +48,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\obj\DebugInFlash\</OutputDirectory>
+          <OutputDirectory>.\obj\</OutputDirectory>
           <OutputName>MM32</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\obj\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -79,9 +80,9 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
+            <UserProg1Name>fromelf.exe #L --vhx --8x1 --output main.hex;fromelf --bin -o "$L@L.bin" "#L"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -183,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -323,6 +325,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -383,21 +386,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>STARTUP</GroupName>
-          <Files>
-            <File>
-              <FileName>system_MM32F103xCxE_o.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\system_MM32F103xCxE_o.c</FilePath>
-            </File>
-            <File>
-              <FileName>startup_MM32F103xCxE_o.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\KEIL_StartAsm\startup_MM32F103xCxE_o.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -511,8 +499,48 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>STARTUP</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MM32F103xCxE_o.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\system_MM32F103xCxE_o.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_MM32F103xCxE_o.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\KEIL_StartAsm\startup_MM32F103xCxE_o.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>::Data Exchange</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Test</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
+
+  <RTE>
+    <apis/>
+    <components>
+      <component Cclass="Test" Cgroup="Unity" Cvariant="Classic" Cvendor="Arm-Packs" Cversion="2.5.0">
+        <package license="LICENSE.txt" name="Unity" schemaVersion="1.6" url="https://github.com/MDK-Packs/Pack/raw/master/Unity/" vendor="Arm-Packs" version="1.0.0"/>
+        <targetInfos>
+          <targetInfo name="MM32"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Data Exchange" Cgroup="JSON" Csub="Jsmn" Cvendor="MDK-Packs" Cversion="1.1.0">
+        <package license="LICENSE.txt" name="Jsmn" schemaVersion="1.6" url="https://github.com/MDK-Packs/Pack/raw/master/Jsmn/" vendor="MDK-Packs" version="1.1.0"/>
+        <targetInfos>
+          <targetInfo name="MM32"/>
+        </targetInfos>
+      </component>
+    </components>
+    <files/>
+  </RTE>
 
 </Project>
