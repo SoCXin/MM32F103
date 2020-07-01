@@ -48,14 +48,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\obj\DebugInFlash\</OutputDirectory>
+          <OutputDirectory>.\obj\</OutputDirectory>
           <OutputName>MM32</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\obj\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -80,9 +80,9 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
+            <UserProg1Name>fromelf.exe #L --vhx --8x1 --output main.hex;fromelf --bin -o "$L@L.bin" "#L"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -390,21 +390,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>STARTUP</GroupName>
-          <Files>
-            <File>
-              <FileName>system_MM32F103xCxE_o.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\system_MM32F103xCxE_o.c</FilePath>
-            </File>
-            <File>
-              <FileName>startup_MM32F103xCxE_o.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\KEIL_StartAsm\startup_MM32F103xCxE_o.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>HALlib</GroupName>
           <Files>
             <File>
@@ -511,6 +496,21 @@
               <FileName>HAL_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\HAL_lib\src\HAL_wwdg.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>STARTUP</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MM32F103xCxE_o.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\system_MM32F103xCxE_o.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_MM32F103xCxE_o.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\..\..\Device\MM32F103xCxE_o\Source\KEIL_StartAsm\startup_MM32F103xCxE_o.s</FilePath>
             </File>
           </Files>
         </Group>
