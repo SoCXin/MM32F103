@@ -21,6 +21,7 @@
 ### [资源收录](https://github.com/SoCXin/MM32F103)
 
 * [文档](docs/)
+* [资源](src/)
 * [工程](project/)
 
 ### [选型建议](https://github.com/SoCXin)
