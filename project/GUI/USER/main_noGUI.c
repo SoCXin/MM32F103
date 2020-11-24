@@ -3,13 +3,11 @@
 #include "sys.h"
 #include "usart.h"
 #include "lcd.h"
-#include "key.h"  
-#include "24cxx.h" 
+#include "key.h"
+#include "24cxx.h"
 #include "myiic.h"
-#include "touch.h" 
+#include "touch.h"
 #include "rtc.h"
-//�����巶������21
-//������ʵ�� 
 #include "calendar.h"
 
 //FreeRTOS
@@ -34,7 +32,7 @@ bool isLCDIdle = FALSE;
 static u32 lcdIdleCount = 0;
 bool isSetTime = FALSE;
 ////////////////////////////////////////////////////////////////////////////////
-//ʱ�����ð�ť
+//ĘąźäÉčÖĂ°´ĹĽ
 #define B1X1 10
 #define B1Y1 260
 #define B1X2 60
@@ -43,13 +41,13 @@ bool isSetTime = FALSE;
 
 #define LED0_ON()   GPIO_ResetBits(GPIOA,GPIO_Pin_8);
 #define LED0_OFF()  GPIO_SetBits(GPIOA,GPIO_Pin_8);
-#define LED0B()     GPIOA->ODR ^= 0x0100; 
+#define LED0B()     GPIOA->ODR ^= 0x0100;
 
 #define LED1_ON()   GPIO_ResetBits(GPIOD,GPIO_Pin_2);
 #define LED1_OFF()  GPIO_SetBits(GPIOD,GPIO_Pin_2);
-#define LED1B()     GPIOD->ODR ^= 0x04; 
-//extern void MainTask(void *pvParameters);   
-extern void MainTaskWM(void *pvParameters);  
+#define LED1B()     GPIOD->ODR ^= 0x04;
+//extern void MainTask(void *pvParameters);
+extern void MainTaskWM(void *pvParameters);
 extern void MainTaskTouch(void *pvParameters);
 //void MainTaskTouch(void *pvParameters)
 //{
@@ -62,90 +60,101 @@ extern void MainTaskTouch(void *pvParameters);
 //}
 void Load_Draw_Dialog(void)
 {
-	LCD_Clear(WHITE);//����   
- 	POINT_COLOR=BLUE;//��������Ϊ��ɫ 
-	LCD_ShowString(lcddev.width-24,0,200,16,16,"RST");//��ʾ��������
-  POINT_COLOR=RED;//���û�����ɫ 
-	
-	//��ʾʱ�����ð�ť
+	LCD_Clear(WHITE);//ÇĺĆÁ
+ 	POINT_COLOR=BLUE;//ÉčÖĂ×ÖĚĺÎŞŔśÉŤ
+	LCD_ShowString(lcddev.width-24,0,200,16,16,"RST");//ĎÔĘžÇĺĆÁÇřÓň
+  POINT_COLOR=RED;//ÉčÖĂť­ąĘŔśÉŤ
+
+	//ĎÔĘžĘąÖÓÉčÖĂ°´ĹĽ
 	LCD_DrawRectangle(B1X1,B1Y1,B1X2,B1Y2);
-	LCD_ShowString(B1X1+8,B1Y1+8,40,16,16,"H");//��ʾ��������
+	LCD_ShowString(B1X1+8,B1Y1+8,40,16,16,"H");//ĎÔĘžÇĺĆÁÇřÓň
 	LCD_DrawRectangle(B1X1+50,B1Y1,B1X2+50,B1Y2);
-	LCD_ShowString(B1X1+58,B1Y1+8,40,16,16,"M");//��ʾ��������
+	LCD_ShowString(B1X1+58,B1Y1+8,40,16,16,"M");//ĎÔĘžÇĺĆÁÇřÓň
 }
-  
+
 bool isTouched(u16 x1, u16 y1, u16 x2, u16 y2)
 {
-	 if( (tp_dev.x[0] >x1)&&(tp_dev.x[0] < x2) && (tp_dev.y[0]> y1) &&(tp_dev.y[0] <y2))
-		 return TRUE;
-	 else return FALSE;
+	if( (tp_dev.x[0] >x1)&&(tp_dev.x[0] < x2) && (tp_dev.y[0]> y1) &&(tp_dev.y[0] <y2))
+		return TRUE;
+	else return FALSE;
 }
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+*******************************************************************************/
 /* To make sure the task waiting for event run timely, this task need high priority.*/
 void vKeyScanTask(void *pvParameters)
 {
-	 u8 key;
-	 keyEvent = xEventGroupCreate();// create event group
-	 while(1)
-	 {
-			key = KEY_Scan(0);
-		 switch(key)
-		 {
-			 case KEY0_PRES:
-				 lcdIdleCount = 0;
-				 xEventGroupSetBits(keyEvent, E_KEY0);
-			   printf("Key0 pressed!\n");
-				 break;
-			 case KEY1_PRES:
-				 lcdIdleCount = 0;
-				 xEventGroupSetBits(keyEvent, E_KEY1);
-			   printf("Key 1 pressed!\n");
-				 break;
-			 case WKUP_PRES:
-				 lcdIdleCount = 0;
-				 xEventGroupSetBits(keyEvent, E_KEYWKUP);
-				 break;
-			 default:
-				 //printf("Key not recogized!\n");
-			   break;
-		 }
-		 vTaskDelay(100);
-	 }
+	u8 key;
+	keyEvent = xEventGroupCreate();// create event group
+	while(1)
+	{
+		key = KEY_Scan(0);
+		switch(key)
+		{
+			case KEY0_PRES:
+				lcdIdleCount = 0;
+				xEventGroupSetBits(keyEvent, E_KEY0);
+			printf("Key0 pressed!\n");
+				break;
+			case KEY1_PRES:
+				lcdIdleCount = 0;
+				xEventGroupSetBits(keyEvent, E_KEY1);
+			printf("Key 1 pressed!\n");
+				break;
+			case WKUP_PRES:
+				lcdIdleCount = 0;
+				xEventGroupSetBits(keyEvent, E_KEYWKUP);
+				break;
+			default:
+				//printf("Key not recogized!\n");
+			break;
+		}
+		vTaskDelay(100);
+	}
 }
+/******************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+*******************************************************************************/
 void vDisplayTask(void *pvParameters)
 {
-	  
+
 	while(1)
-	{ 	
+	{
 		if (!isInAdjust)
 		{
-//LCD sleep	
+//LCD sleep
 		lcdIdleCount ++;
 		if((lcdIdleCount > LCD_SLEEP_COUNT) && (isLCDIdle == FALSE))
 		{
-			 isLCDIdle = TRUE;
-			 LCD_DisplayOff();
-			 LCD_LED = 0; //LCD light turn off
+			isLCDIdle = TRUE;
+			LCD_DisplayOff();
+			LCD_LED = 0; //LCD light turn off
 		}
 		else if(isLCDIdle && (lcdIdleCount < LCD_SLEEP_COUNT))
 		{
-			 LCD_LED=1;
-			 LCD_DisplayOn();
-			 isLCDIdle = FALSE;
+			LCD_LED=1;
+			LCD_DisplayOn();
+			isLCDIdle = FALSE;
 		}
 		else{}
-//////			
-			tp_dev.scan(0); 		 
-			if(tp_dev.sta&TP_PRES_DOWN)			//������������
-			{	
+//////
+			tp_dev.scan(0);
+			if(tp_dev.sta&TP_PRES_DOWN)			//´ĽĂţĆÁąť°´ĎÂ
+			{
 				lcdIdleCount = 0;
 				if(tp_dev.x[0]<lcddev.width&&tp_dev.y[0]<lcddev.height)
-				{	
-					if(tp_dev.x[0]>(lcddev.width-24)&&tp_dev.y[0]<16)Load_Draw_Dialog();//���
-					else TP_Draw_Big_Point(tp_dev.x[0],tp_dev.y[0],RED);		//��ͼ	  			   
+				{
+					if(tp_dev.x[0]>(lcddev.width-24)&&tp_dev.y[0]<16)Load_Draw_Dialog();//Çĺłý
+					else TP_Draw_Big_Point(tp_dev.x[0],tp_dev.y[0],RED);		//ť­Íź
 				}
-			}else delay_ms(10);	//û�а������µ�ʱ�� 
-	  }
+			}else delay_ms(10);	//ĂťÓĐ°´źü°´ĎÂľÄĘąşň
+		}
 		else
 		{
 			printf("Still adjusting screen, couldnot use. Or lcd closed.\r\n");
@@ -153,9 +162,14 @@ void vDisplayTask(void *pvParameters)
 		}
 	}
 }
-
+/******************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+*******************************************************************************/
 void vTouchAdjustTask(void *pvParameters)
-{ 	
+{
 	EventBits_t event_bits;
 	printf("Touch screen adjust task running...\r\n");
 	while(1)
@@ -165,23 +179,28 @@ void vTouchAdjustTask(void *pvParameters)
                                      pdTRUE,     /* will be cleared automatically. */
                                      pdFALSE,    /* Don't wait for both bits, either bit unblock task. */
                                      portMAX_DELAY); /* Block indefinitely to wait for the condition to be met. */
-		if((event_bits & E_KEY0) == E_KEY0)	//KEY0����,��ִ��У׼����
-		{	
+		if((event_bits & E_KEY0) == E_KEY0)	//KEY0°´ĎÂ,ÔňÖ´ĐĐĐŁ×źłĚĐň
+		{
 			isInAdjust = TRUE; // Indictate we are adjusting touch screen.
-			LCD_Clear(WHITE);//����
-		  TP_Adjust();  //��ĻУ׼, ���г�ʱ�Զ��˳�����
-			TP_Save_Adjdata();	 
+			LCD_Clear(WHITE);//ÇĺĆÁ
+		  TP_Adjust();  //ĆÁÄťĐŁ×ź, ´řÓĐłŹĘą×ÔśŻÍËłöšŚÄÜ
+			TP_Save_Adjdata();
 			Load_Draw_Dialog();
 			isInAdjust = FALSE;
 		}
 	}
 }
-
+/******************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+*******************************************************************************/
 void vLEDTask( void *pvParameters )
 {
 	for( ;; )
-	{					
-        LED0B();  
+	{
+        LED0B();
         vTaskDelay(1000);
 	}
 }
@@ -198,26 +217,31 @@ void MainTaskTouch(void *pv)
 		i++;
 	}
 }
-
+/******************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+*******************************************************************************/
 void vRTCShowTask(void *pvParameters)
 {
-	u8 t;	
-  _calendar_obj config;	
+	u8 t;
+	_calendar_obj config;
 
 	while(1)
-	{								    
+	{
 		if(t!=calendar.sec)  // not setting time
 		{
-				//��ʾʱ��
-			POINT_COLOR=BLUE;//��������Ϊ��ɫ					 
-			LCD_ShowString(60,130,200,16,16,"    -  -     ");	   
+				//ĎÔĘžĘąźä
+			POINT_COLOR=BLUE;//ÉčÖĂ×ÖĚĺÎŞŔśÉŤ
+			LCD_ShowString(60,130,200,16,16,"    -  -     ");
 			LCD_ShowString(60,162,200,16,16,"  :  :  ");
-			
+
 			t=calendar.sec;
-			POINT_COLOR=LIGHTGREEN;//��������Ϊ��ɫ	
-			LCD_ShowNum(60,130,calendar.w_year,4,16);									  
-			LCD_ShowNum(100,130,calendar.w_month,2,16);									  
-			LCD_ShowNum(124,130,calendar.w_date,2,16);	 
+			POINT_COLOR=LIGHTGREEN;//ÉčÖĂ×ÖĚĺÎŞŔśÉŤ
+			LCD_ShowNum(60,130,calendar.w_year,4,16);
+			LCD_ShowNum(100,130,calendar.w_month,2,16);
+			LCD_ShowNum(124,130,calendar.w_date,2,16);
 			switch(calendar.week)
 			{
 				case 0:
@@ -240,13 +264,13 @@ void vRTCShowTask(void *pvParameters)
 					break;
 				case 6:
 					LCD_ShowString(60,148,200,16,16,"Saturday ");
-					break;  
+					break;
 			}
-			LCD_ShowNum(60,162,calendar.hour,2,16);									  
-			LCD_ShowNum(84,162,calendar.min,2,16);									  
+			LCD_ShowNum(60,162,calendar.hour,2,16);
+			LCD_ShowNum(84,162,calendar.min,2,16);
 			LCD_ShowNum(108,162,calendar.sec,2,16);
 		}
-		
+
 		{
 			tp_dev.scan(0);
 			config.w_year = calendar.w_year;
@@ -254,49 +278,49 @@ void vRTCShowTask(void *pvParameters)
 			config.w_date = calendar.w_date;
 			if (isTouched(B1X1,B1Y1,B1X2,B1Y2)) // H pressed
 			{
-				 config.hour = calendar.hour + 1;
-				 if (config.hour >=24)
-					 config.hour = 0;
-				 LCD_ShowNum(60,162,calendar.hour,2,16);
-				 RTC_Set(config.w_year,config.w_month, config.w_date,config.hour,config.min,config.sec);
+				config.hour = calendar.hour + 1;
+				if (config.hour >=24)
+					config.hour = 0;
+				LCD_ShowNum(60,162,calendar.hour,2,16);
+				RTC_Set(config.w_year,config.w_month, config.w_date,config.hour,config.min,config.sec);
 			}
 			if (isTouched(B1X1+50,B1Y1,B1X2+50,B1Y2)) // H pressed
 			{
-				 config.min = calendar.min + 1;
-				 if (config.min >=60)
-					 config.min = 0;
-				 LCD_ShowNum(84,162,calendar.min,2,16);
-				 RTC_Set(config.w_year,config.w_month, config.w_date,config.hour,config.min,config.sec);
+				config.min = calendar.min + 1;
+				if (config.min >=60)
+					config.min = 0;
+				LCD_ShowNum(84,162,calendar.min,2,16);
+				RTC_Set(config.w_year,config.w_month, config.w_date,config.hour,config.min,config.sec);
 			}
-				
-		}			
-		vTaskDelay(50);	
-	}		
+
+		}
+		vTaskDelay(50);
+	}
 }
 void vSystemInitTask(void *pvParameters)
 {
 	 //hardware init
-	 NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //����NVIC�жϷ���2:2λ��ռ���ȼ���2λ��Ӧ���ȼ
-	 delay_init();	    	 //��ʱ������ʼ��	
-	 uart_init(115200);	 	 //���ڳ�ʼ��
-	 LCD_Driver_Init();
-	 tp_dev.init();			//��������ʼ��
-	 LED_Init();		  		//��ʼ����LED���ӵ�Ӳ���ӿ�	
-	 KEY_Init();				//������ʼ��
+	 NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //ÉčÖĂNVICÖĐśĎˇÖ×é2:2ÎťÇŔŐźÓĹĎČźśŁŹ2ÎťĎěÓŚÓĹĎČź
+	 delay_init();	    	 //ŃÓĘąşŻĘýłőĘźťŻ
+	 uart_init(115200);	 	 //´ŽżÚłőĘźťŻ
+	LCD_Driver_Init();
+	 tp_dev.init();			//´ĽĂţĆÁłőĘźťŻ
+	 LED_Init();		  		//łőĘźťŻÓëLEDÁŹ˝ÓľÄÓ˛źţ˝ÓżÚ
+	 KEY_Init();				//°´źüłőĘźťŻ
 
 	 if(tp_dev.touchtype!=0XFF)// hint for adjust.
 	 {
-		  LCD_ShowString(60,110,200,16,16,"Press KEY0 to Adjust");//����������ʾ
+		  LCD_ShowString(60,110,200,16,16,"Press KEY0 to Adjust");//ľç×čĆÁ˛ĹĎÔĘž
 	 }
 	 delay_ms(1500);
-	 	 
-	 while(RTC_Init())		//RTC��ʼ��	��һ��Ҫ��ʼ���ɹ�
-	 { 
-			LCD_ShowString(60,130,200,16,16,"RTC ERROR!   ");	
+
+	 while(RTC_Init())		//RTCłőĘźťŻ	ŁŹŇťś¨ŇŞłőĘźťŻłÉšŚ
+	 {
+			LCD_ShowString(60,130,200,16,16,"RTC ERROR!   ");
 			delay_ms(100);
-			LCD_ShowString(60,130,200,16,16,"RTC Trying...");	
+			LCD_ShowString(60,130,200,16,16,"RTC Trying...");
 	 }
-	 //��������
+	 //´´˝¨ČÎÎń
 	 Load_Draw_Dialog(); //show initial screen.
 	// xTaskCreate( MainTaskWM, (const  portCHAR * ) "Init", configMINIMAL_STACK_SIZE*4, NULL, tskIDLE_PRIORITY+1, NULL );
 	 xTaskCreate( MainTaskTouch, (const  portCHAR * ) "Touch", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+3, NULL );
@@ -307,12 +331,17 @@ void vSystemInitTask(void *pvParameters)
 //	 xTaskCreate( vKeyScanTask, (const  portCHAR * ) "KeyScan", 256, NULL, configMAX_PRIORITIES-2, NULL );
 //	 xTaskCreate( vDisplayTask, (const  portCHAR * ) "Display", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL );
 
-	 vTaskDelete(NULL);// delete this task.
+	vTaskDelete(NULL);// delete this task.
 }
-
+/******************************************************************************
+**函数信息 ：
+**功能描述 ：
+**输入参数 ：无
+**输出参数 ：无
+*******************************************************************************/
  int main(void)
- { 
-	taskENTER_CRITICAL();	
+ {
+	taskENTER_CRITICAL();
 	xTaskCreate( vSystemInitTask, (const  portCHAR * ) "Init", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+3, NULL );
 	taskEXIT_CRITICAL();
   vTaskStartScheduler();

@@ -1,28 +1,4 @@
-/*
-*********************************************************************************************************
-*	                                  
-*	模块名称 : GUI界面主函数
-*	文件名称 : MainTask.c
-*	版    本 : V1.0
-*	说    明 : 本实验主要演示游标，一共有12中游标。
-*			  	GUI_CursorArrowS 	小箭头。
-*				GUI_CursorArrowM 	中箭头。
-*				GUI_CursorArrowL 	大箭头。
-*				GUI_CursorArrowSI   小反箭头。
-*				GUI_CursorArrowMI   中反箭头。
-*				GUI_CursorArrowLI   大反箭头。
-*				GUI_CursorCrossS    小十字。
-*				GUI_CursorCrossM    中十字。
-*				GUI_CursorCrossL    大十字。
-*				GUI_CursorCrossSI   小反十字。
-*				GUI_CursorCrossMI   中反十字。
-*				GUI_CursorCrossLI   大反十字。
-*	修改记录 :
-*		版本号    日期          作者                 说明
-*		v1.0    2013-04-17    Eric2013      ST固件库版本 V1.0.2版本。
-*
-*********************************************************************************************************
-*/
+
 #include "lcd.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -206,7 +182,7 @@ void MainTaskWM(void *pvParameters) {
 
   //标记  WM_CF_MEMDEV 频繁用于启用所有窗口的存储设备。请注意，在调用GUI_Init() 之前允许设
   //置创建标记，这将导致背景窗口也受到创建标记的影响。
-  
+
 //  WM_SetCreateFlags(WM_CF_MEMDEV);  /* Use memory devices on all windows to avoid flicker */
   while (1) {
     //创建阻塞式对话框

@@ -1,22 +1,25 @@
 #include "stdio.h"
-//¿ª·¢°å·¶Àı´úÂë21
-//´¥ÃşÆÁÊµÑé 
+//å¼€å‘æ¿èŒƒä¾‹ä»£ç 21
+//è§¦æ‘¸å±å®éªŒ
 #include "application.h"
 
 //FreeRTOS
 #include "FreeRTOS.h"
 #include "task.h"
 
-
-///////////////////////////////////////////////////////
-
-
- int main(void)
- { 
-	taskENTER_CRITICAL();	
+/******************************************************************************
+**å‡½æ•°ä¿¡æ¯ ï¼š
+**åŠŸèƒ½æè¿° ï¼š
+**è¾“å…¥å‚æ•° ï¼šæ— 
+**è¾“å‡ºå‚æ•° ï¼šæ— 
+*******************************************************************************/
+int main(void)
+{
+	taskENTER_CRITICAL();
 	xTaskCreate( vSystemInitTask, (const  portCHAR * ) "Init", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+3, NULL );
 	taskEXIT_CRITICAL();
-  vTaskStartScheduler();
+	vTaskStartScheduler();
 	return 0;
 }
 
+/*----------------------- (C) COPYRIGHT 2020 www.OS-Q.comm --------------------*/

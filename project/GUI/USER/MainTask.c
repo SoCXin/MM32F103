@@ -1,21 +1,3 @@
-/*
-*********************************************************************************************************
-*                                                µC/GUI
-*                        Universal graphic software for embedded applications
-*
-*                       (c) Copyright 2002, Micrium Inc., Weston, FL
-*                       (c) Copyright 2000, SEGGER Microcontroller Systeme GmbH          
-*
-*              µC/GUI is protected by international copyright laws. Knowledge of the
-*              source code may not be used to write a similar product. This file may
-*              only be used in accordance with a license and should not be redistributed 
-*              in any way. We appreciate your understanding and fairness.
-*
-* File        : MainTask.c
-* Purpose     : Application program in windows simulator
-*********************************************************************************************************
-*/
-
 
 #include "GUI.h"
 #include "led.h"
@@ -28,13 +10,12 @@ extern const GUI_BITMAP bmMicriumLogo;
 extern const GUI_BITMAP bmMicriumLogo_1bpp;
 
 
-/*
-  *******************************************************************
-  *
-  *              main()
-  *
-  *******************************************************************
-*/
+/******************************************************************************
+**???? ?
+**???? ?
+**???? ??
+**???? ??
+*******************************************************************************/
 void GUIDEMO_ShowColorBar(void) {
   int nBars = 13;
   int NumColors = LCD_GetDevCap(LCD_DEVCAP_NUMCOLORS);
@@ -69,7 +50,7 @@ void GUIDEMO_ShowColorBar(void) {
     yStep = (LCD_YSIZE - y0 - 60) / nBars;
   #endif
   GUI_SetColor(GUI_WHITE);
-  GUI_SetBkColor(GUI_BLACK); 
+  GUI_SetBkColor(GUI_BLACK);
   GUI_Clear();
 	GUI_SetFont(&GUI_Font8x16);
 	GUI_DispString("Color bars\n");
@@ -90,7 +71,7 @@ void GUIDEMO_ShowColorBar(void) {
     GUI_DispString(", ");
     GUI_DispDecMin(NumColors);
     GUI_DispString(" colors\n");
-    #if (LCD_FIXEDPALETTE) 
+    #if (LCD_FIXEDPALETTE)
       GUI_DispString("Fixed palette: ");
       GUI_DispDecMin(LCD_FIXEDPALETTE);
     #else
@@ -155,7 +136,12 @@ void GUIDEMO_ShowColorBar(void) {
   }
   GUI_Delay(1000);
 }
-
+/******************************************************************************
+**???? ?
+**???? ?
+**???? ??
+**???? ??
+*******************************************************************************/
 void MainTask(void *pvParameters) {
 	GUI_PID_STATE STATE;
   int i,YPos;
@@ -199,9 +185,9 @@ void MainTask(void *pvParameters) {
   GUI_SetFont(&GUI_Font10S_1);
   GUI_DispStringHCenterAt("Micriµm Inc.",LCDXSize/2,YPos+60);;
   GUI_Delay(2000);
-	
+
 	GUIDEMO_ShowColorBar();
-	
+
 	while(1)
 	{
 				GUI_TOUCH_Exec();
@@ -211,13 +197,13 @@ void MainTask(void *pvParameters) {
             LCD_ShowString(50,50,200,16,16,"x:");
             LCD_ShowNum(74,50,STATE.x,5,16);        //????
             LCD_ShowNum(74,70,GUI_TOUCH_GetxPhys(),5,16);
-           
+
             LCD_ShowString(124,50,200,16,16,"y:");
             LCD_ShowNum(160,50,STATE.y,5,16);    //????
             LCD_ShowNum(160,70,GUI_TOUCH_GetyPhys(),5,16);
 
             GUI_SetColor(GUI_RED);
-					  GUI_SetPenSize(4);
+            GUI_SetPenSize(4);
             //GUI_DrawPoint( STATE.x , STATE.y );
 					TP_Draw_Big_Point(STATE.x, STATE.y, GUI_RED);
         }else
@@ -226,3 +212,5 @@ void MainTask(void *pvParameters) {
 				}
 	}
 }
+
+/*----------------------- (C) COPYRIGHT 2020 www.OS-Q.comm --------------------*/
